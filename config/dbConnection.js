@@ -5,7 +5,7 @@ const state={
 }
 
 module.exports.connect=function(done){
-    const url = 'mongodb+srv://TreasureHunt:TreasureHuntPassword@cluster0.psrtx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+    const url= 'mongodb+srv://underemployed:fL6uvkYQEg1N3wcv@cluster0.xouka94.mongodb.net/?retryWrites=true&w=majority';
     // const url = 'mongodb://localhost:27017';
     // const url = 'mongodb://0.0.0.0:27017/';
     const dbName = 'treasurehunt'; 
