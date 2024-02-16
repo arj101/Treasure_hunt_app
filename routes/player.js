@@ -7,42 +7,33 @@ function verifyTeam(Id){
   var isTeamId=false;
   switch (Id) {
     case "team01":
-      isTeamId=true;
-      break;
     case "team02":
+    case "team03":
+    case "team04":
+    case "team05":
+    case "team06":
+    case "team07":
+    case "team08":
+    case "team09":
+    case "team10":
+    case "team11":
+    case "team12":
+    case "team13":
+    case "team14":
+    case "team15":
+    case "team16":
+    case "team17":
+    case "team18":
+    case "team19":
+    case "team20":
       isTeamId=true;
       break;
-    case "team03":
-      isTeamId=true;
-      break; 
-    case "team04":
-      isTeamId=true;
-      break; 
-    case "team05":
-      isTeamId=true;
-      break; 
-    case "team06":
-      isTeamId=true;
-      break; 
-    case "team07":
-      isTeamId=true;
-      break; 
-    case "team08":
-      isTeamId=true;
-      break; 
-    case "team09":
-      isTeamId=true;
-      break; 
-    case "team10":
-      isTeamId=true;
-      break; 
     default:
       isTeamId=false;
       break;
   }
   return isTeamId;
 }
-
 function createTeam(teamId){
   let teamDetails={}
   //teamId
@@ -127,6 +118,8 @@ router.get('/', function(req, res) {
 });
 
 router.post('/clue', function(req, res) {
+  let title = "Vista Voyage";
+
   let data = req.body
   var teamId=data.teamId
   teamId=teamId.toLowerCase();
@@ -138,11 +131,11 @@ router.post('/clue', function(req, res) {
       case "dr e sreedharan":
         teamHelper.isTeam(teamId).then((result)=>{
           if(result){
-            res.render('clues/clue2',{msg:"Already completed"})
+            res.render('clues/clue2',{msg:"Already completed",title:title})
           }else{
             teamDetails=createTeam(teamId)
             teamHelper.addTeam(teamDetails).then((data)=>{
-              res.render('clues/clue2')
+              res.render('clues/clue2',{title:title})
             })
           }
         })
@@ -211,29 +204,49 @@ router.post('/clue', function(req, res) {
         nextPageName = 'clue10'
         finalCheck(10,teamId,nextPageName,res)
         break;
-      case "grand canyon":
-        teamHelper.getTeamDetails(teamId).then((result)=>{
-          if (isCompletePrevClues(result,11)) {
-            if(result.currentClue==11 || result.currentClue>11){
-              res.render('clues/treasure')
-            }else{
-              passedAnswers=result.passedAnswers;
-              teamDetails=updateTeam(11,passedAnswers);
-              teamDetails.atTreasure=true;
-              let temp=teamDetails.passedAnswers;
-              let treasureTime=temp[0];
-              teamDetails.treasureTime=treasureTime.time;
-              console.log(teamDetails);
-              teamHelper.updateTeam(teamId,teamDetails).then((result)=>{
-                res.render('clues/treasure')
-              })
+        case "grand canyon":
+          nextPageName = 'clue11'
+          finalCheck(11,teamId,nextPageName,res)
+          break;
+        case "thazhvaram":
+          nextPageName = 'clue12'
+          finalCheck(12,teamId,nextPageName,res)
+          break;
+        case "zoom it":
+          nextPageName = 'clue13'
+          finalCheck(13,teamId,nextPageName,res)
+          break;
+        case "library":
+          nextPageName = 'clue14'
+          finalCheck(14,teamId,nextPageName,res)
+          break;
+        case "drawing hall":
+          nextPageName = 'clue15'
+          finalCheck(15,teamId,nextPageName,res)
+          break;
+        case "canteen":
+          teamHelper.getTeamDetails(teamId).then((result)=>{
+            if (isCompletePrevClues(result,16)) {
+              if(result.currentClue==16 || result.currentClue>16){
+                res.render('clues/treasure',{title:title})
+              }else{
+                passedAnswers=result.passedAnswers;
+                teamDetails=updateTeam(16,passedAnswers);
+                teamDetails.atTreasure=true;
+                let temp=teamDetails.passedAnswers;
+                let treasureTime=temp[0];
+                teamDetails.treasureTime=treasureTime.time;
+                console.log(teamDetails);
+                teamHelper.updateTeam(teamId,teamDetails).then((result)=>{
+                  res.render('clues/treasure',{title:title})
+                })
+              }
+            } else {
+              session.errMsg = "Malpractice detected!"
+              res.redirect('/')
             }
-          } else {
-            session.errMsg = "Malpractice detected!"
-            res.redirect('/')
-          }
-        })
-        break;
+          })
+          break;
       default:
         session.errMsg = "Wrong answer!"
         res.redirect('/')
