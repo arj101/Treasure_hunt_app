@@ -122,11 +122,11 @@ router.post('/clue', function(req, res) {
 
   let data = req.body
   var teamId=data.teamId
-  teamId=teamId.toLowerCase();
+  teamId = teamId.toLowerCase().trim();
   if (verifyTeam(teamId)) {
     req.session.teamId=data.teamId
     var answer=data.answer
-    answer=answer.toLowerCase();
+    answer=answer.toLowerCase().trim();
     switch(answer) {
       case "dr e sreedharan":
         teamHelper.isTeam(teamId).then((result)=>{
